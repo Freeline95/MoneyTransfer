@@ -1,0 +1,15 @@
+POST localhost/transfer
+Content-Type: multipart/form-data; boundary=AppBoundary
+
+--AppBoundary
+Content-Disposition: form-data; name="amount"
+
+100000
+--AppBoundary
+Content-Disposition: form-data; name="source_wallet_id"
+
+3
+--AppBoundary
+Content-Disposition: form-data; name="dest_wallet_id"
+
+4

@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:12.3
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=money_transfer_db
+#    volumes:
+#      - postgres-data:/var/lib/postgresql/data
+#      - ./docker/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+
+  php-fpm:
+    build:
+      context: ./
+      dockerfile: docker/php-fpm/Dockerfile
+    depends_on:
+      - postgres
+    volumes:
+      - ./app:/var/www
+    environment:
+      - DATABASE_URL=postgresql://postgres_user:123456@postgres:5432/money_transfer_db?serverVersion=12.3&charset=utf8
+
+  nginx:
+    build:
+      context: ./
+      dockerfile: docker/nginx/Dockerfile
+    volumes:
+      - ./app:/var/www
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/sites/:/etc/nginx/sites-available
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+      - ./docker/logs:/var/log
+    depends_on:
+      - php-fpm
+    ports:
+      - "80:80"

@@ -1,0 +1,11 @@
+First you need to run docker-compose up -d
+You will take application with filled database by migrations and fixtures
+
+In tests you can find App\Tests\Controller\TransferControllerTest::testDo what can be execute for creating 2 wallets
+and transferring money between them
+
+What about im not sure, but was thinking:
+1) BCMatch library always round numbers down, thats why application sometimes calculate commission not exactly
+2) OPTIMISTIC or PESSIMISTIC lock. If OPTIMISTIC mode had been enabled, than user could had situations, when his transfer
+could not finish, even after retries. And im not sure in PESSIMISTIC locks, because Wallet is overload entity
+and it must be able to get requests. But PESSIMISTIC locks can slow their handling
