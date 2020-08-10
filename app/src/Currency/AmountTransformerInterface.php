@@ -4,11 +4,25 @@
 namespace App\Currency;
 
 /**
- * Transform amount for
+ * Transform amount for system or for user
  */
 interface AmountTransformerInterface
 {
-    public function normalize(string $amount);
+    /**
+     * Normalize for db storing
+     *
+     * @param string $amount
+     *
+     * @return mixed
+     */
+    public function normalize(string $amount): int;
 
-    public function denormalize(int $amount);
+    /**
+     * Denormalize for user
+     *
+     * @param int $amount
+     *
+     * @return mixed
+     */
+    public function denormalize(int $amount): string;
 }

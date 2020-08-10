@@ -5,7 +5,11 @@ In tests you can find App\Tests\Controller\TransferControllerTest::testDo what c
 and transferring money between them
 
 What about im not sure, but was thinking:
-1) BCMatch library always round numbers down, thats why application sometimes calculate commission not exactly
+1) BCMatch library can round numbers up, thats why application sometimes calculate commission more than 1.5%
+[2200000010000001, '21000000.10000001', 68499999850000, 2100000010000001]
+In this test case (from TransferControllerTest) exact commission is 68499999849999.985 and by BCMath it was rounded to up
+Im not sure, that we can debit some more money, than 1.5% from user's wallet
+
 2) OPTIMISTIC or PESSIMISTIC lock. If OPTIMISTIC mode had been enabled, than user could had situations, when his transfer
 could not finish, even after retries. And im not sure in PESSIMISTIC locks, because Wallet is overload entity
 and it must be able to get requests. But PESSIMISTIC locks can slow their handling

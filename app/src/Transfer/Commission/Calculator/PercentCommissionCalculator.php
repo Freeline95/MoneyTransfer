@@ -11,6 +11,11 @@ use App\Transfer\Commission\CommissionCalculatorInterface;
 class PercentCommissionCalculator implements CommissionCalculatorInterface
 {
     /**
+     * Minimal commission for deal
+     */
+    private const MIN_COMMISSION = 1;
+
+    /**
      * @var string
      */
     private $fraction;
@@ -34,6 +39,12 @@ class PercentCommissionCalculator implements CommissionCalculatorInterface
      */
     public function calculate(Transaction $transaction): int
     {
-        return (int)bcmul($transaction->getAmount(), $this->fraction);
+        $commission = (int)bcmul($transaction->getAmount(), $this->fraction);
+
+        if ($commission === 0) {
+            return self::MIN_COMMISSION;
+        } else {
+            return $commission;
+        }
     }
 }

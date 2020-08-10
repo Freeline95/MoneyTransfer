@@ -17,11 +17,9 @@ class BitcoinAmountTransformer implements AmountTransformerInterface
     private const CONVERTING_KOEFFICIENT = 100000000;
 
     /**
-     * @param string $amount
-     *
-     * @return int
+     * {@inheritDoc}
      */
-    public function normalize(string $amount)
+    public function normalize(string $amount): int
     {
         if (!preg_match("/^(\d{1,10})(\.\d{1,8})?$/", $amount)) {
             throw new \RuntimeException('Invalid argument for convert bitcoin to int. Amount: ' . $amount);
@@ -31,9 +29,7 @@ class BitcoinAmountTransformer implements AmountTransformerInterface
     }
 
     /**
-     * @param int $amount
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function denormalize(int $amount): string
     {
