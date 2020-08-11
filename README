@@ -4,12 +4,12 @@ You will take application with filled database by migrations and fixtures
 In tests you can find App\Tests\Controller\TransferControllerTest::testDo what can be execute for creating 2 wallets
 and transferring money between them
 
-What about im not sure, but was thinking:
+I had some doubts about the following, but i had thoughts about it:
 1) BCMatch library can round numbers up, thats why application sometimes calculate commission more than 1.5%
 [2200000010000001, '21000000.10000001', 68499999850000, 2100000010000001]
 In this test case (from TransferControllerTest) exact commission is 68499999849999.985 and by BCMath it was rounded to up
-Im not sure, that we can debit some more money, than 1.5% from user's wallet
+Im not sure, that we can charge more, than 1.5% from user's wallet
 
-2) OPTIMISTIC or PESSIMISTIC lock. If OPTIMISTIC mode had been enabled, than user could had situations, when his transfer
-could not finish, even after retries. And im not sure in PESSIMISTIC locks, because Wallet is overload entity
+2) OPTIMISTIC or PESSIMISTIC lock. If OPTIMISTIC mode is enabled, than user could have situations, when his transfer
+would not be executed, even after several retries. And im not sure about PESSIMISTIC locks, because Wallet is overload entity
 and it must be able to get requests. But PESSIMISTIC locks can slow their handling
